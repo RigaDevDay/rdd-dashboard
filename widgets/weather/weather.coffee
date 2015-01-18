@@ -4,6 +4,7 @@ class Dashing.Weather extends Dashing.Widget
     # This is fired when the widget is done being rendered
 
   onData: (data) ->
+    debugger
     if data.climacon
       # reset classes
       $('i.climacon').attr 'class', "climacon icon-background #{data.climacon}"
