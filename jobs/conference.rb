@@ -5,7 +5,7 @@ speakers = 28
 sessions = 33
 attendees = 300
 
-SCHEDULER.every '60s' do
+SCHEDULER.every '2s' do
 
   send_event('tracks', { value: tracks })
   send_event('speakers', { value: speakers })
