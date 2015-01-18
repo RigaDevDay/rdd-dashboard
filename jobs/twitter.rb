@@ -1,7 +1,7 @@
 require 'twitter'
 require 'yaml'
 
-conference_config = YAML.load_file('rigadevday.yml')
+conference_config = YAML.load_file('/etc/rigadevday.yml')
 
 twitter = Twitter::REST::Client.new do |config|
   config.consumer_key = conference_config['consumer_key']
