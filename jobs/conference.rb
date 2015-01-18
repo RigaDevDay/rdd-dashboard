@@ -1,5 +1,4 @@
 
-# TODO: read data from a file
 tracks = 5
 speakers = 28
 sessions = 33
