@@ -2,17 +2,65 @@
 <div class="gridster">
   <ul>
 
+    <!-- Row #1: logo, time, weather, sponsors -->
+
     <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
       <div data-view="Image" data-image="/logo.png"></div>
     </li>
 
-    <li data-row="1" data-col="2" data-sizex="1" data-sizey="1">
+    <li data-row="1" data-col="2" data-sizex="2" data-sizey="1">
       <div data-view="Clock"></div>
       <i class="icon-time icon-background"></i>
     </li>
 
-    <li data-row="1" data-col="3" data-sizex="1" data-sizey="1">
+    <li data-row="1" data-col="4" data-sizex="1" data-sizey="1">
       <div data-id="weather" data-view="Weather"></div>
+    </li>
+
+    <li data-row="1" data-col="5" data-sizex="2" data-sizey="1">
+      <div data-view="Sponsor"></div>
+    </li>
+
+    <!-- Row #2: conference data: tracks, sessions, speakers, attendees -->
+
+    <li data-row="2" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-id="tracks" data-view="Number" data-title="Tracks"></div>
+    </li>
+
+    <li data-row="2" data-col="2" data-sizex="1" data-sizey="1">
+      <div data-id="sessions" data-view="Number" data-title="Sessions"></div>
+    </li>
+
+    <li data-row="2" data-col="3" data-sizex="1" data-sizey="1">
+      <div data-id="speakers" data-view="Number" data-title="Speakers"></div>
+    </li>
+
+    <li data-row="2" data-col="4" data-sizex="1" data-sizey="1">
+      <div data-id="attendees" data-view="Number" data-title="Attendees"></div>
+    </li>
+
+    <li data-row="2" data-col="5" data-sizex="2" data-sizey="1">
+      <div data-view="Schedule"></div>
+    </li>
+
+    <!-- Row #3: social data: twitter, facebook -->
+
+    <li data-row="3" data-col="1" data-sizex="3" data-sizey="1">
+      <div data-view="Twitter"></div>
+    </li>
+
+    <li data-row="3" data-col="4" data-sizex="3" data-sizey="1">
+      <div data-view="Facebook"></div>
+    </li>
+
+    <!-- Row #4: operations: voting, facebook -->
+
+    <li data-row="4" data-col="1" data-sizex="3" data-sizey="1">
+      <div data-view="Voting"></div>
+    </li>
+
+    <li data-row="4" data-col="4" data-sizex="3" data-sizey="1">
+      <div data-view="Operations"></div>
     </li>
 
   </ul>
