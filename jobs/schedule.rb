@@ -1,6 +1,7 @@
 
 require 'json'
 require 'net/http'
+require 'active_support/time'
 require 'uri'
 
 github_uri       = URI.parse('https://raw.githubusercontent.com/')
