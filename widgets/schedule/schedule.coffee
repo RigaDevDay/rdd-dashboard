@@ -17,7 +17,7 @@ class Dashing.Schedule extends Dashing.Widget
 
   nextSession: =>
     sessions = @get('sessions')
-    if comments
+    if sessions
       @sessionElem.fadeOut =>
         @currentIndex = (@currentIndex + 1) % sessions.length
         @set 'current_sessions', sessions[@currentIndex]
