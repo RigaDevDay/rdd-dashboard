@@ -1,7 +1,8 @@
 <h1 class="title" data-bind="title"></h1>
 <div class="session-container">
-  <h3><img data-bind-src='current_session.avatar'/><span data-bind='current_session.name' class="name"></span></h3>
-  <p class="comment" data-bind='quote'></p>
+  <h3><span data-bind='current_session.time' class="time"></span><span data-bind='current_session.title' class="title"></span></h3>
+  <h3><img data-bind-src='current_session.avatar'/><span data-bind='current_session.author' class="author"></span></h3>
+  <p class="comment" data-bind='current_session.description'></p>
 </div>
 
 <p class="more-info" data-bind="moreinfo"></p>

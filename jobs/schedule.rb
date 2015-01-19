@@ -21,15 +21,26 @@ end
 
 SCHEDULER.every '10m', :first_in => 0 do |job|
   current_time = Time.now
-  current_min  = to_min("#{current_time.hour}#{current_time.min}".to_i)
+  current_min = current_time.hour * 60 + current_time.min
   time_slots   = schedule.map do |time_slot|
-    { :time_code => time_slot['time'].split(':').join('').to_i, :events => time_slot['events'] }
+    { :time => time_slot['time'], :time_code => time_slot['time'].split(':').join('').to_i, :events => time_slot['events'] }
   end
   current_slot = time_slots.select { |time_slot| to_min(time_slot[:time_code]) > current_min + 15 }.first
   if current_slot
     sessions = current_slot[:events].map do |event|
-      { name: event['subtitle'], body: event['description'] }
+      speaker_id   = event['speakers'] ? event['speakers'].first : nil
+      avatar       = speaker_id ? "https://raw.githubusercontent.com/RigaDevDay/RigaDevDay.github.io/master/assets/img/speaker-photos/#{speaker_id}.png" : nil
+      speaker      = speaker_id ? speaker_data.find { |speaker| "#{speaker['id']}" == "#{speaker_id}" } : nil
+      speaker_name = speaker ? speaker['name'] : ''
+      {
+         title: "#{event['title']} #{event['subtitle']}",
+         description: event['description'],
+         avatar: avatar,
+         author: speaker_name,
+         time: current_slot[:time]
+      }
     end
     send_event('schedule', sessions: sessions)
   end
 end
+
