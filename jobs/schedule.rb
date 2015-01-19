@@ -19,8 +19,8 @@ def to_min(time_code)
 end
 
 
-SCHEDULER.every '10m', :first_in => 0 do |job|
-  current_time = Time.now
+SCHEDULER.every '1m', :first_in => 0 do |job|
+  current_time = Time.now.in_time_zone('Europe/Riga')
   current_min = current_time.hour * 60 + current_time.min
   time_slots   = schedule.map do |time_slot|
     { :time => time_slot['time'], :time_code => time_slot['time'].split(':').join('').to_i, :events => time_slot['events'] }
