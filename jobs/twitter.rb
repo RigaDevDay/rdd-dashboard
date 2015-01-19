@@ -12,7 +12,7 @@ end
 
 search_term = URI::encode('#rigadevday')
 
-SCHEDULER.every '10m', :first_in => 0 do |job|
+SCHEDULER.every '1m', :first_in => 0 do |job|
   begin
     tweets = twitter.search("#{search_term}")
     if tweets
