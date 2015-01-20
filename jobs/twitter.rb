@@ -40,7 +40,7 @@ end
 
 search_term = URI::encode('#rigadevday')
 
-SCHEDULER.every '30s', :first_in => 0 do |job|
+SCHEDULER.every '1m', :first_in => 0 do |job|
   begin
     tweets = twitter.search("#{search_term}", { :result_type => 'recent', :count => 100 })
     tweets.each do |tweet|
@@ -56,9 +56,9 @@ SCHEDULER.every '30s', :first_in => 0 do |job|
       send_event('twitter_mentions', comments: tweets)
     end
     stats = []
-    # TODO: select tweet stats from database
-    (1..10).each do |i|
-      stats << { x: i, y: rand(50) }
+    i = 0
+    db.execute( "select count(*) as tweet_count, strftime('%Y-%m-%d %H:00', created_at) as tweet_hour from tweets group by 2 order by 2 desc limit 10;" ) do |row|
+      stats.unshift({ x: i++, y: rand(row['TWEET_COUNT']) })
     end
     send_event('twitter_activity', { graphtype: 'bar', points: stats })
   rescue Twitter::Error
