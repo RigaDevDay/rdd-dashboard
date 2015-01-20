@@ -1,8 +1,5 @@
 class Dashing.Twitter extends Dashing.Widget
 
-  @accessor 'quote', ->
-    "“#{@get('current_comment')?.body}”"
-
   ready: ->
     @currentIndex = 0
     @commentElem = $(@node).find('.comment-container')
@@ -20,5 +17,5 @@ class Dashing.Twitter extends Dashing.Widget
     if comments
       @commentElem.fadeOut =>
         @currentIndex = (@currentIndex + 1) % comments.length
-        @set 'current_comment', comments[@currentIndex]
+        @set 'visible_comments', comments.slice(@currentIndex, @currentIndex + 2)
         @commentElem.fadeIn()

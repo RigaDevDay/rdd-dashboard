@@ -1,4 +1,6 @@
+
 require 'twitter'
+require 'active_support/time'
 require 'yaml'
 
 conference_config = YAML.load_file('/etc/rigadevday.yml')
@@ -17,7 +19,7 @@ SCHEDULER.every '1m', :first_in => 0 do |job|
     tweets = twitter.search("#{search_term}")
     if tweets
       tweets = tweets.map do |tweet|
-        { name: tweet.user.name, body: tweet.text, avatar: tweet.user.profile_image_url_https }
+        { name: tweet.user.name, body: "#{tweet.created_at.in_time_zone('Europe/Riga').strftime "%m-%d %H:%M:%S" } #{tweet.text}", avatar: tweet.user.profile_image_url_https }
       end
       send_event('twitter_mentions', comments: tweets)
     end
