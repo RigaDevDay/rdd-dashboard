@@ -13,7 +13,7 @@ db = SQLite3::Database.new "/var/lib/sqlite/rigadevday.db"
 [
   'CREATE TABLE IF NOT EXISTS TWEETS(ID TEXT, CREATED_AT TEXT);',
   'CREATE UNIQUE INDEX IF NOT EXISTS TWEET_ID ON TWEETS (ID);',
-  'CREATE INDEX TWEET_DATE IF NOT EXISTS ON TWEETS (CREATED_AT);'
+  'CREATE INDEX IF NOT EXISTS TWEET_DATE ON TWEETS (CREATED_AT);'
 ].each { |sql| db.execute(sql) }
 
 ActiveRecord::Base.establish_connection(
@@ -45,8 +45,8 @@ SCHEDULER.every '30s', :first_in => 0 do |job|
     tweets = twitter.search("#{search_term}", { :result_type => 'recent', :count => 100 })
     tweets.each do |tweet|
       t = Tweet.new
-      t.id = tweet.id
-      t.created_at = tweet.created_at.in_time_zone('Europe/Riga').strftime("%m-%d %H:%M:%S")
+      t.ID = tweet.id
+      t.CREATED_AT = tweet.created_at.in_time_zone('Europe/Riga').iso8601
       t.save
     end
     if tweets
