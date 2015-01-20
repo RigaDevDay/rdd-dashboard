@@ -1,26 +1,23 @@
 <h1 class="title" data-bind="title"></h1>
 
-<ol>
+<ul class="list-nostyle">
   <li data-foreach-item="votes">
-  <table style="width: 85%; margin-left: auto; margin-right: auto;">  
-    <tbody>
-      <tr>
-        <td style="width: 20%;">
-          <img data-bind-src="item.avatar">
-        </td>
-        <td>
-          <div>
-            <h3><span data-bind="item.author" class="author"></span></h3>
+    <table style="width: 85%; margin-left: auto; margin-right: auto;">  
+      <tbody>
+        <tr>
+          <td style="width: 20%;">
+            <img data-bind-src="item.avatar">
+          </td>
+          <td>
+            <h3><span data-bind="item.author" class="label"></span></h3>
             <h3><span data-bind="item.title" class="title"></span></h3>
-            <h3><span data-bind="item.rate | precision 2 | append '%'" class="rate"></span></h3>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+            <h3><span data-bind="item.rate | append ' satisfaction'" class="value"></span></h3>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </li>
-</ol>
-
+</ul>
 
 <p class="more-info" data-bind="moreinfo"></p>
 <p class="updated-at" data-bind="updatedAtMessage"></p>

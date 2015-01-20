@@ -28,6 +28,7 @@ SCHEDULER.every '2m', :first_in => 0 do |job|
     { title: session['title'], avatar: avatar, author: speaker_name, rate: rate }
   end
   votes          = votes.select { |session| session[:rate] > 0 }.sort { |s1, s2| s2[:rate] <=> s1[:rate] }.take(4)
+  votes.each { |session| session[:rate] = "%.2f%%" % session[:rate] }
   send_event('voting', votes: votes)
 end
 
