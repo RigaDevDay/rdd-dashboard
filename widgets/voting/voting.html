@@ -2,17 +2,25 @@
 
 <ol>
   <li data-foreach-item="votes">
-    <span class="label" data-bind="item.title"></span>
-    <span class="value" data-bind="item.rate"></span>
+  <table style="width: 85%; margin-left: auto; margin-right: auto;">  
+    <tbody>
+      <tr>
+        <td style="width: 20%;">
+          <img data-bind-src="item.avatar">
+        </td>
+        <td>
+          <div>
+            <h3><span data-bind="item.author" class="author"></span></h3>
+            <h3><span data-bind="item.title" class="title"></span></h3>
+            <h3><span data-bind="item.rate | precision 2 | append '%'" class="rate"></span></h3>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
   </li>
 </ol>
 
-<ul class="list-nostyle">
-  <li data-foreach-item="items">
-    <span class="label" data-bind="item.title"></span>
-    <span class="value" data-bind="item.rate"></span>
-  </li>
-</ul>
 
 <p class="more-info" data-bind="moreinfo"></p>
 <p class="updated-at" data-bind="updatedAtMessage"></p>

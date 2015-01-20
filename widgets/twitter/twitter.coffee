@@ -16,6 +16,6 @@ class Dashing.Twitter extends Dashing.Widget
     comments = @get('comments')
     if comments
       @commentElem.fadeOut =>
-        @currentIndex = (@currentIndex + 1) % comments.length
-        @set 'visible_comments', comments.slice(@currentIndex, @currentIndex + 4)
+        @currentIndex = (@currentIndex + 3) % comments.length
+        @set 'visible_comments', comments.slice(@currentIndex, @currentIndex + 3).concat(comments.slice(0, Math.max(0, @currentIndex + 3 - comments.length)))
         @commentElem.fadeIn()
