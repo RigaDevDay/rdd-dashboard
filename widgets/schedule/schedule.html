@@ -8,8 +8,13 @@
           <img data-bind-src="current_session.avatar">
         </td>
         <td>
-          <h3><span data-bind="current_session.author" class="author"></span></h3>
-          <h3><span data-bind="current_session.title" class="title"></span></h3>
+          <div data-renderif="current_session.author">
+            <h3><span data-bind="current_session.author" class="author"></span></h3>
+            <h3><span data-bind="current_session.title" class="title"></span></h3>
+          </div>
+          <div data-deferif="current_session.author">
+            <h2><span data-bind="current_session.title" class="title"></span></h2>
+          </div>
         </td>
       </tr>
     </tbody>

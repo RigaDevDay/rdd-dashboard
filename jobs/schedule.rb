@@ -41,8 +41,8 @@ SCHEDULER.every '1m', :first_in => 0 do |job|
           avatar   = '/assets/party.png'
         else
           avatar   = '/assets/favicon.png'
-        end
-        room_name  = 'Hall'
+        end          
+        room_name  = 'Main Hall'
       end
       speaker      = speaker_id ? speaker_data.find { |speaker| "#{speaker['id']}" == "#{speaker_id}" } : nil
       speaker_name = speaker ? speaker['name'] : ''

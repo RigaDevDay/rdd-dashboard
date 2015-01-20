@@ -1,9 +1,8 @@
 
 <div class="comment-container">
-  <div data-foreach-item="visible_comments">
-    <h3><img data-bind-src='item.avatar'/><span data-bind='item.name' class="name"></span></h3>
+  <div data-foreach-item="visible_comments" style="text-align: left; margin-bottom: 15px">
+    <h3><img data-bind-src='item.avatar'/><span data-bind='item.name' class="name"></span> (<span data-bind='item.time' class="title"></span>)</h3>
     <p class="comment" data-bind='item.body'></p>
-    <p></p>
   </div>
 </div>
 
