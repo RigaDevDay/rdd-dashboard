@@ -32,12 +32,12 @@ SCHEDULER.every '1m', :first_in => 0 do |job|
       speaker_id   = event['speakers'] ? event['speakers'].first : nil
       avatar       = speaker_id ? "https://raw.githubusercontent.com/RigaDevDay/RigaDevDay.github.io/master/assets/img/speaker-photos/#{speaker_id}.png" : nil
       room_name    = rooms[i]
-      if !avatar && title
-        if title.include? "Coffee"
+      if !avatar && event['title']
+        if event['title'].include? "Coffee"
           avatar   = '/assets/coffee_break.png'
-        elsif title.include? "Lunch"
+        elsif event['title'].include? "Lunch"
           avatar   = '/assets/lunch.png'
-        elsif title.include? "Afterparty"
+        elsif event['title'].include? "Afterparty"
           avatar   = '/assets/party.png'
         else
           avatar   = '/assets/favicon.png'
