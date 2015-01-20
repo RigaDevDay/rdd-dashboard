@@ -1,8 +1,17 @@
 
-<div class="session-container">
-  <h2><span data-bind='current_session.time' class="time"></span> <spanclass="title">Room 1</span></h2>
-  <h3><span data-bind='current_session.title' class="title"></span></h3>
-  <h3><img data-bind-src='current_session.avatar'/> <span data-bind='current_session.author' class="author"></span></h3>
+<div class="session-container">  
+  <h2><span data-bind="current_session.time" class="time"></span> <span data-bind="current_session.time" class="title"></span></h2>     
+  <table style="width: 85%; margin-left: auto; margin-right: auto;">  
+    <tbody>
+      <tr>
+        <td style="width: 20%;">
+          <img data-bind-src="current_session.avatar" src="https://raw.githubusercontent.com/RigaDevDay/RigaDevDay.github.io/master/assets/img/speaker-photos/22.png">
+        </td>
+        <td>
+          <h3><span data-bind="current_session.author" class="author"></span></h3>
+          <h3><span data-bind="current_session.title" class="title"></span></h3>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
-
-<p class="more-info" data-bind="moreinfo"></p>
