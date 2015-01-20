@@ -19,7 +19,7 @@ SCHEDULER.every '1m', :first_in => 0 do |job|
     tweets = twitter.search("#{search_term}", { :result_type => 'recent', :count => 20 })
     if tweets
       tweets = tweets.map do |tweet|
-        { name: tweet.user.name, time: tweet.created_at.in_time_zone('Europe/Riga').strftime "%m-%d %H:%M:%S", body: tweet.text, avatar: tweet.user.profile_image_url_https }
+        { name: tweet.user.name, time: tweet.created_at.in_time_zone('Europe/Riga').strftime("%m-%d %H:%M:%S"), body: tweet.text, avatar: tweet.user.profile_image_url_https }
       end
       send_event('twitter_mentions', comments: tweets)
     end

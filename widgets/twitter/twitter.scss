@@ -7,11 +7,12 @@ $title-color:       rgba(255, 255, 255, 0.7);
 $moreinfo-color:    rgba(255, 255, 255, 0.7);
 
 // ----------------------------------------------------------------------------
-// Widget-twitter styles
+// widget-twitter styles
 // ----------------------------------------------------------------------------
 .widget-twitter {
 
   background-color: $background-color;
+
 
   .title {
     color: $title-color;
@@ -24,6 +25,9 @@ $moreinfo-color:    rgba(255, 255, 255, 0.7);
 
   .comment-container {
     display: none;
+    margin-left: auto; 
+    margin-right: auto; 
+    width: 95%;
   }
 
   .more-info {
