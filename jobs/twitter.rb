@@ -26,7 +26,7 @@ SCHEDULER.every '1m', :first_in => 0 do |job|
     end
     stats = []
     # TODO: select tweet stats from database
-    (1..24).each do |i|
+    (1..10).each do |i|
       stats << { x: i, y: rand(50) }
     end
     send_event('twitter_activity', points: stats)
