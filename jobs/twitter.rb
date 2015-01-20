@@ -16,9 +16,12 @@ search_term = URI::encode('#rigadevday')
 
 SCHEDULER.every '1m', :first_in => 0 do |job|
   begin
-    tweets = twitter.search("#{search_term}", { :result_type => 'recent', :count => 20 })
+    tweets = twitter.search("#{search_term}", { :result_type => 'recent', :count => 100 })
+    # TODO: add all tweets to database
+    # TODO: select tweet stats from database
+    # TODO: send data to dashing
     if tweets
-      tweets = tweets.map do |tweet|
+      tweets = tweets.select { |tweet| !tweet.text.start_with?('RT') }.take(20).map do |tweet|
         { name: tweet.user.name, time: tweet.created_at.in_time_zone('Europe/Riga').strftime("%m-%d %H:%M:%S"), body: tweet.text, avatar: tweet.user.profile_image_url_https }
       end
       send_event('twitter_mentions', comments: tweets)

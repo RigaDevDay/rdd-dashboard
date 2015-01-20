@@ -16,7 +16,7 @@ rooms            = schedule_data['roomNames']
 schedule         = schedule_data['schedule']
 
 def to_min(time_code)
-   return (time_code / 100) * 60 + time_code % 100
+  return (time_code / 100) * 60 + time_code % 100
 end
 
 
