@@ -1,16 +1,16 @@
 <h1 class="title" data-bind="title"></h1>
 
 <ol>
-  <li data-foreach-item="items">
-    <span class="label" data-bind="item.label"></span>
-    <span class="value" data-bind="item.value"></span>
+  <li data-foreach-item="votes">
+    <span class="label" data-bind="item.title"></span>
+    <span class="value" data-bind="item.rate"></span>
   </li>
 </ol>
 
 <ul class="list-nostyle">
   <li data-foreach-item="items">
-    <span class="label" data-bind="item.label"></span>
-    <span class="value" data-bind="item.value"></span>
+    <span class="label" data-bind="item.title"></span>
+    <span class="value" data-bind="item.rate"></span>
   </li>
 </ul>
 
