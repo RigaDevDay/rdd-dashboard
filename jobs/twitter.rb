@@ -44,10 +44,12 @@ SCHEDULER.every '1m', :first_in => 0 do |job|
   begin
     tweets = twitter.search("#{search_term}", { :result_type => 'recent', :count => 100 })
     tweets.each do |tweet|
-      t = Tweet.new
-      t.ID = tweet.id
-      t.CREATED_AT = tweet.created_at.in_time_zone('Europe/Riga').iso8601
-      t.save
+      if !Tweet.exists?(id: tweet.id)
+        t = Tweet.new
+        t.ID = tweet.id
+        t.CREATED_AT = tweet.created_at.in_time_zone('Europe/Riga').iso8601
+        t.save
+      end
     end
     if tweets
       tweets = tweets.select { |tweet| !tweet.text.start_with?('RT') }.take(20).map do |tweet|
@@ -56,13 +58,17 @@ SCHEDULER.every '1m', :first_in => 0 do |job|
       send_event('twitter_mentions', comments: tweets)
     end
     stats = []
-    i = 0
+    i = 10
     db.execute( "select count(*) as tweet_count, strftime('%Y-%m-%d %H:00', created_at) as tweet_hour from tweets group by 2 order by 2 desc limit 10;" ) do |row|
-      stats.unshift({ x: i++, y: rand(row['TWEET_COUNT']) })
+      stats << { x: i, y: row[0] }
+      i -= 1
     end
     send_event('twitter_activity', { graphtype: 'bar', points: stats })
   rescue Twitter::Error
     puts "\e[33mFor the twitter widget to work, you need to put in your twitter API keys in the jobs/twitter.rb file.\e[0m"
   end
 end
+
+
+
 
