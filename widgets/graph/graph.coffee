@@ -26,7 +26,8 @@ class Dashing.Graph extends Dashing.Widget
 
     @graph.series[0].data = @get('points') if @get('points')
 
-    x_axis = new Rickshaw.Graph.Axis.Time(graph: @graph)
+    labels = ['now', '-1h', '-2h', '-3h', '-4h', '-5h', '-6h', '-7h', '-8h', '-9h'];
+    x_axis = new Rickshaw.Graph.Axis.Time( { graph: @graph, tickFormat: function(x) { return labels[x]; } } )
     y_axis = new Rickshaw.Graph.Axis.Y(graph: @graph, tickFormat: Rickshaw.Fixtures.Number.formatKMBT)
     @graph.render()
 
