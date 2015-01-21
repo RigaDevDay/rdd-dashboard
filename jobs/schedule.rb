@@ -12,7 +12,7 @@ http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 schedule_data    = JSON.parse(http.get('/RigaDevDay/RigaDevDay.github.io/master/data/schedule.json').body)
 speaker_data     = JSON.parse(http.get('/RigaDevDay/RigaDevDay.github.io/master/data/speakers.json').body)
 
-rooms            = schedule_data['roomNames']
+rooms            = ['Room 6', 'Room 1', 'Room 2', 'Room 3', 'Room 4']
 schedule         = schedule_data['schedule']
 
 def to_min(time_code)
@@ -34,14 +34,20 @@ SCHEDULER.every '1m', :first_in => 0 do |job|
       avatar       = speaker_id ? "https://raw.githubusercontent.com/RigaDevDay/RigaDevDay.github.io/master/assets/img/speaker-photos/#{speaker_id}.png" : nil
       room_name    = rooms[i]
       if !avatar && event['title']
-        room_name = 'HALLWAY'
+        room_name = 'HALL'
         if event['title'].include? "Coffee"
           avatar    = '/assets/coffee_break.png'
         elsif event['title'].include? "Lunch"
           avatar    = '/assets/lunch.png'
+        elsif event['title'].include? "Closing"
+          avatar    = '/assets/favicon.png'
+          room_name = 'Room 6'
+        elsif event['title'].include? "Opening"
+          avatar    = '/assets/favicon.png'
+          room_name = 'Room 6'
         elsif event['title'].include? "Afterparty"
           avatar    = '/assets/party.png'
-          room_name = 'RIGA CITY'
+          room_name = 'CITY'
         else
           avatar    = '/assets/favicon.png'
         end          
