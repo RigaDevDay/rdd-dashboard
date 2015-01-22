@@ -25,10 +25,10 @@ SCHEDULER.every '2m', :first_in => 0 do |job|
     speaker      = speaker_id ? speaker_data.find { |speaker| "#{speaker['id']}" == "#{speaker_id}" } : nil
     speaker_name = speaker ? speaker['name'] : ''
     avatar       = speaker_id ? "https://raw.githubusercontent.com/RigaDevDay/RigaDevDay.github.io/master/assets/img/speaker-photos/#{speaker_id}.png" : nil
-    { title: session['title'], avatar: avatar, author: speaker_name, rate: rate }
+    { title: session['title'], avatar: avatar, author: speaker_name, rate: total_votes }
   end
   votes          = votes.select { |session| session[:rate] > 0 }.sort { |s1, s2| s2[:rate] <=> s1[:rate] }.take(3)
-  votes.each { |session| session[:rate] = "%.2f%%" % session[:rate] }
+  # votes.each { |session| session[:rate] = "%.2f%%" % session[:rate] }
   send_event('voting', votes: votes)
 end
 
