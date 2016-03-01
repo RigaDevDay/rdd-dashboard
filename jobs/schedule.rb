@@ -11,11 +11,10 @@ http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
 event_data       = JSON.parse(http.get('/RigaDevDay/RigaDevDay.github.io/master/assets/data/main.json').body)
 speaker_data     = event_data['speakers']
-schedule_data    = event_data['days'][0] # TODO: calculate effective day
+schedule_data    = event_data['days'][Date.today.day % 2]
 
 schedule         = schedule_data['schedule']['schedule']
-
-rooms            = ['Room 6', 'Room 1', 'Room 2', 'Room 3', 'Room 4']
+rooms            = schedule_data['schedule']['roomNames']
 
 def to_min(time_code)
   return (time_code / 100) * 60 + time_code % 100
@@ -28,7 +27,7 @@ SCHEDULER.every '1m', :first_in => 0 do |job|
   time_slots   = schedule.map do |time_slot|
     { :time => time_slot['time'], :time_code => time_slot['time'].split(':').join('').to_i, :events => time_slot['events'] }
   end
-  current_slot = time_slots.select { |time_slot| to_min(time_slot[:time_code]) > current_min + 15 }.first
+  current_slot = time_slots.select { |time_slot| to_min(time_slot[:time_code]) > current_min - 740 }.first
   current_slot ||= time_slots.last
   if current_slot
     sessions       = current_slot[:events].each_with_index.map do |event, i|
@@ -44,13 +43,10 @@ SCHEDULER.every '1m', :first_in => 0 do |job|
           avatar    = '/assets/lunch.png'
         elsif event['title'].include? "Closing"
           avatar    = '/assets/favicon.png'
-          room_name = 'Room 6'
         elsif event['title'].include? "Opening"
           avatar    = '/assets/favicon.png'
-          room_name = 'Room 6'
         elsif event['title'].include? "Afterparty"
           avatar    = '/assets/party.png'
-          room_name = 'CITY'
         else
           avatar    = '/assets/favicon.png'
         end          

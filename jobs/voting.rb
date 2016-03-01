@@ -11,7 +11,7 @@ http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
 event_data       = JSON.parse(http.get('/RigaDevDay/RigaDevDay.github.io/master/assets/data/main.json').body)
 speaker_data     = event_data['speakers']
-schedule_data    = event_data['days'][0] # TODO: calculate effective day
+schedule_data    = event_data['days'][Date.today.day % 2]
 
 schedule         = schedule_data['schedule']['schedule']
 sessions         = schedule.map { |time_slot| time_slot['events'] }.flatten
