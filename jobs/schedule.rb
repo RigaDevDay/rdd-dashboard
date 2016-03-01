@@ -27,7 +27,7 @@ SCHEDULER.every '1m', :first_in => 0 do |job|
   time_slots   = schedule.map do |time_slot|
     { :time => time_slot['time'], :time_code => time_slot['time'].split(':').join('').to_i, :events => time_slot['events'] }
   end
-  current_slot = time_slots.select { |time_slot| to_min(time_slot[:time_code]) > current_min - 740 }.first
+  current_slot = time_slots.select { |time_slot| to_min(time_slot[:time_code]) > current_min + 15 }.first
   current_slot ||= time_slots.last
   if current_slot
     sessions       = current_slot[:events].each_with_index.map do |event, i|
