@@ -1,4 +1,4 @@
 <div class="sponsor-container">
   <h3>Sponsored by:</h3>
-  <h2><img data-bind-src="current_sponsor | prepend '/assets/sponsors/' | append '.png'"/></h2>
+  <h2><img data-bind-src="current_sponsor | default 'empty' | prepend '/assets/sponsors/' | append '.png'"/></h2>
 </div>

@@ -1,0 +1,50 @@
+<% content_for :title do %>RigaDevDay dashboard<% end %>
+<div class="gridster">
+  <ul>
+
+    <!-- Row #1: logo, time, weather, sponsors -->
+
+    <li data-row="1" data-col="1" data-sizex="2" data-sizey="2">
+      <div data-id="twitter_mentions" data-view="Twitter" style="background-color:#006FA7;" data-moreinfo="Tweets tagged with #rigadevday"></div>
+      <i class="icon-twitter icon-background"></i>
+    </li>
+
+    <li data-row="1" data-col="3" data-sizex="2" data-sizey="1" data-sponsors="accenture avonitech cluster ctco deac dynatrace evolution ibm ideaportriga neueda ok sap tele2">
+      <div data-id="sponsor" data-view="Sponsor" style="background-color:#BAE3F3"></div>
+      <i class="icon-star icon-background"></i>
+    </li>
+
+    <li data-row="1" data-col="5" data-sizex="2" data-sizey="2">
+      <div data-id="twitter_top_users" data-view="Heroes" data-title="Tweeting Heroes" style="background-color:#006FA7;" data-moreinfo="Tweet more to get onto this board"></div>
+      <i class="icon-bar-chart icon-background"></i>
+    </li>
+
+    <!-- Row #2: twitter, schedule, voting -->
+
+    <li data-row="2" data-col="3" data-sizex="2" data-sizey="1">
+      <div data-id="schedule" data-view="Schedule" style="background-color:#0197D2;" data-moreinfo="Events coming soon"></div>    
+      <i class="icon-tasks icon-background"></i>
+    </li>
+
+    <!-- Row #3: twitter activity, twitter  -->
+
+    <li data-row="3" data-col="1" data-sizex="2" data-sizey="1">
+      <div data-id="twitter_activity" data-view="Graph" data-title="(re)tweets/hour" style="background-color:#006FA7;"></div>
+      <i class="icon-twitter icon-background"></i>
+    </li>
+
+    <li data-row="3" data-col="3" data-sizex="1" data-sizey="1">
+      <div data-id="weather" data-view="Weather" style="background-color:#0197D2;"></div>
+    </li>
+
+    <li data-row="3" data-col="4" data-sizex="2" data-sizey="1">
+      <div data-id="clock" data-view="Clock" style="background-color:#006FA7;"></div>
+      <i class="icon-time icon-background"></i>
+    </li>
+
+    <li data-row="3" data-col="6" data-sizex="1" data-sizey="1">
+      <div data-id="logo" data-view="Image" data-image="/logo.png"></div>
+    </li>
+
+  </ul>
+</div>

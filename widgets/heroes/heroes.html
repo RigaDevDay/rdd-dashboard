@@ -1,0 +1,15 @@
+<div class="hero-container">
+  <h1 class="header" data-bind="title"></h1>
+  <h1 class="title" data-hideif="users">Waiting...</h1>
+  <table style="width: 95%;">  
+    <tbody>
+      <tr data-foreach-item="users">
+        <td style="width: 20%;"><img data-bind-src="item.avatar" class="avatar"></td>
+        <td style="width: 50%; text-align: left"><span data-bind="item.name" class="label"></span></td>
+        <td style="width: 30%; text-align: right"><span data-bind="item.tweet_count | append ' tweet(s)'" class="value"></span></td>      
+      </tr>
+    </tbody>
+  </table>
+  <p class="more-info" data-bind="moreinfo"></p>
+  <p class="updated-at" data-bind="updatedAtMessage"></p>
+</div>

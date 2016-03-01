@@ -1,37 +1,55 @@
 // ----------------------------------------------------------------------------
 // Sass declarations
 // ----------------------------------------------------------------------------
-$background-color:  #eb9c3c;
+$background-color:  #12b0c5;
+$value-color:       #fff;
 
 $title-color:       rgba(255, 255, 255, 0.7);
+$label-color:       rgba(255, 255, 255, 0.7);
 $moreinfo-color:    rgba(255, 255, 255, 0.7);
 
 // ----------------------------------------------------------------------------
-// Widget-schedule styles
+// widget-heroes styles
 // ----------------------------------------------------------------------------
-.widget-schedule {
+.widget-heroes {
 
   background-color: $background-color;
+  vertical-align: top;
+
+  .header {
+    font-size: 60px;
+    font-weight: 900;
+  }
 
   .title {
     color: $title-color;
-    margin-bottom: 15px;
   }
 
-  .name {
-    padding-left: 5px;
+  .label {
+    color: $label-color;
   }
 
-  .session-container {
-    display: none;
+  .value {
+    float: right;
+    margin-left: 12px;
+    font-weight: 600;
+    color: $value-color;
   }
 
-  .speaker-image {
+  .avatar {
     border-radius: 100% !important;
+  }
+
+  .updated-at {
+    color: rgba(0, 0, 0, 0.3);
   }
 
   .more-info {
     color: $moreinfo-color;
+  }
+
+  td {
+    padding: 10px;
   }
 
 }

@@ -1,9 +1,10 @@
 
-<div class="comment-container">
-  <div data-foreach-item="visible_comments" style="text-align: left; margin-bottom: 25px">
-    <h3><img data-bind-src='item.avatar'/><span data-bind='item.name' class="name"></span> (<span data-bind='item.time' class="title"></span>)</h3>
-    <p class="comment" data-bind='item.body'></p>
+<div class="tweet-container">
+  <div data-foreach-item="visible_tweets" class="tweet-item">
+    <h3><img data-bind-src='item.avatar' class="tweet-avatar"/><span data-bind='item.name' class="tweet-user"></span> <span data-bind='item.time' class="tweet-time"></span></h3>
+    <div class="tweet-text" data-bind='item.body | raw'></div>
   </div>
 </div>
 
 <p class="more-info" data-bind="moreinfo"></p>
+<p class="updated-at" data-bind="updatedAtMessage"></p>
