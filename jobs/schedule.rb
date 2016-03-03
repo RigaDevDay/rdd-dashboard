@@ -35,6 +35,12 @@ SCHEDULER.every '1m', :first_in => 0 do |job|
       speaker      = speaker_id ? speaker_data.find { |speaker| "#{speaker['id']}" == "#{speaker_id}" } : nil
       avatar       = speaker ? "https://raw.githubusercontent.com/RigaDevDay/RigaDevDay.github.io/master/#{speaker['img']}" : nil
       room_name    = rooms[i]
+      if event['subtitle'].include? "Open Source and OpenJDK"
+        room_name  = 'Room 2'
+      end
+      if event['subtitle'].include? "The Web - What it Has"
+        room_name  = 'Room 2'
+      end
       if !avatar && event['title']
         room_name = 'HALL'
         if event['title'].include? "Coffee"
@@ -43,8 +49,10 @@ SCHEDULER.every '1m', :first_in => 0 do |job|
           avatar    = '/assets/lunch.png'
         elsif event['title'].include? "Closing"
           avatar    = '/assets/favicon.png'
+          room_name = 'Room 2'
         elsif event['title'].include? "Opening"
           avatar    = '/assets/favicon.png'
+          room_name = 'Room 2'
         elsif event['title'].include? "Afterparty"
           avatar    = '/assets/party.png'
         else
