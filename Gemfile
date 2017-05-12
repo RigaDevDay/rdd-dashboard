@@ -1,7 +1,5 @@
 source 'https://rubygems.org'
 
-ruby "1.9.3"
-
 gem 'dashing'
 gem 'twitter', '5.14.0'
 gem 'google-api-client', '0.8.6'
