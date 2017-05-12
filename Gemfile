@@ -13,6 +13,8 @@ gem 'octokit', '3.7.1'
 gem 'linkedin', '1.0.0'
 gem 'ruby-trello', '1.1.3'
 gem 'fastimage', '1.8.0'
+gem 'firebase', '0.2.6'
+gem 'rest-firebase', '1.1.0'
 
 group :development, :test do
   gem 'sqlite3', '1.3.10'
