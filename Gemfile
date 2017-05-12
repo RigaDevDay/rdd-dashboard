@@ -17,6 +17,3 @@ gem 'fastimage', '1.8.0'
 group :development, :test do
   gem 'sqlite3', '1.3.10'
 end
-group :production do
-  gem 'pg'
-end
