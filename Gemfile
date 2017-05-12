@@ -8,10 +8,15 @@ gem 'json', '1.8.2'
 gem 'activerecord', '4.2.0'
 gem 'activesupport', '4.2.0'
 gem 'sendgrid', '1.2.0'
-gem 'sqlite3', '1.3.10'
 gem 'htmlentities', '4.2.4'
 gem 'octokit', '3.7.1'
 gem 'linkedin', '1.0.0'
 gem 'ruby-trello', '1.1.3'
 gem 'fastimage', '1.8.0'
 
+group :development, :test do
+  gem 'sqlite3', '1.3.10'
+end
+group :production do
+  gem 'pg'
+end
