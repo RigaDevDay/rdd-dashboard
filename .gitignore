@@ -33,3 +33,4 @@ history.yml
 *.iml
 *.ipr
 .idea
+*.iws
