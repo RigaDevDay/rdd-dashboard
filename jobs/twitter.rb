@@ -101,7 +101,7 @@ def get_tweet_text(tweet)
     else
       tweet.media.each { |media|
         expanded_uri = "#{media.expanded_uri}"
-        if (expanded_uri.size < 100)
+        if (expanded_uri.size < 80)
           final_text = final_text.sub(media.uri, expanded_uri)
         end
       }
@@ -110,7 +110,7 @@ def get_tweet_text(tweet)
   if tweet.uris?
     tweet.uris.each { |uri|
       expanded_uri = "#{uri.expanded_uri}"
-      if (expanded_uri.size < 100)
+      if (expanded_uri.size < 80)
         final_text = final_text.sub(uri.uri, expanded_uri)
       end
     }

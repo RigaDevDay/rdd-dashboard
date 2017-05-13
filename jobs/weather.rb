@@ -1,119 +1,70 @@
 
+require 'yaml'
+require 'uri'
 require 'net/http'
-require 'xmlsimple'
- 
-woe_id = 854823
-format = 'c'
- 
-# SCHEDULER.every '1s', :first_in => 0 do |job|
-#   http = Net::HTTP.new('weather.yahooapis.com')
-#   response = http.request(Net::HTTP::Get.new("/forecastrss?w=#{woe_id}&u=#{format}"))
-#   weather_data = XmlSimple.xml_in(response.body, { 'ForceArray' => false })['channel']['item']['condition']
-#   weather_location = XmlSimple.xml_in(response.body, { 'ForceArray' => false })['channel']['location']
-#   send_event('weather', { :temp => "#{weather_data['temp']}&deg;#{format.upcase}",
-#                           :condition => weather_data['text'],
-#                           :title => "#{weather_location['city']} Weather",
-#                           :climacon => climacon_class(weather_data['code'])})
-# end
-#
-#
-# def climacon_class(weather_code)
-#   case weather_code.to_i
-#   when 0
-#     'tornado'
-#   when 1
-#     'tornado'
-#   when 2
-#     'tornado'
-#   when 3
-#     'lightning'
-#   when 4
-#     'lightning'
-#   when 5
-#     'snow'
-#   when 6
-#     'sleet'
-#   when 7
-#     'snow'
-#   when 8
-#     'drizzle'
-#   when 9
-#     'drizzle'
-#   when 10
-#     'sleet'
-#   when 11
-#     'rain'
-#   when 12
-#     'rain'
-#   when 13
-#     'snow'
-#   when 14
-#     'snow'
-#   when 15
-#     'snow'
-#   when 16
-#     'snow'
-#   when 17
-#     'hail'
-#   when 18
-#     'sleet'
-#   when 19
-#     'haze'
-#   when 20
-#     'fog'
-#   when 21
-#     'haze'
-#   when 22
-#     'haze'
-#   when 23
-#     'wind'
-#   when 24
-#     'wind'
-#   when 25
-#     'thermometer low'
-#   when 26
-#     'cloud'
-#   when 27
-#     'cloud moon'
-#   when 28
-#     'cloud sun'
-#   when 29
-#     'cloud moon'
-#   when 30
-#     'cloud sun'
-#   when 31
-#     'moon'
-#   when 32
-#     'sun'
-#   when 33
-#     'moon'
-#   when 34
-#     'sun'
-#   when 35
-#     'hail'
-#   when 36
-#     'thermometer full'
-#   when 37
-#     'lightning'
-#   when 38
-#     'lightning'
-#   when 39
-#     'lightning'
-#   when 40
-#     'rain'
-#   when 41
-#     'snow'
-#   when 42
-#     'snow'
-#   when 43
-#     'snow'
-#   when 44
-#     'cloud'
-#   when 45
-#     'lightning'
-#   when 46
-#     'snow'
-#   when 47
-#     'lightning'
-#   end
-# end
+require 'json'
+
+###########################################################################
+# Climate icon mapping to Yahoo weather codes.
+###########################################################################
+
+climacon_class_to_code = {
+    'cloud'            => [26, 44],
+    'cloud moon'       => [27, 29],
+    'cloud sun'        => [28, 30],
+    'drizzle'          => [8, 9],
+    'fog'              => [20],
+    'hail'             => [17, 35],
+    'haze'             => [19, 21, 22],
+    'lightning'        => [3, 4, 37, 38, 39, 45, 47],
+    'moon'             => [31, 33],
+    'rain'             => [11, 12, 40],
+    'sleet'            => [6, 10, 18],
+    'snow'             => [5, 7, 13, 14, 15, 16, 41, 42, 43, 46],
+    'sun'              => [32, 34],
+    'thermometer full' => [36],
+    'thermometer low'  => [25],
+    'tornado'          => [0, 1, 2],
+    'wind'             => [23, 24],
+}
+
+def climacon_class(climacon_class_to_code, weather_code)
+  climacon_class_to_code.select{ |k, v| v.include? weather_code.to_i }.to_a.first.first
+end
+
+
+###########################################################################
+# Job's body.
+###########################################################################
+
+SCHEDULER.every '5m', :first_in => 0 do |job|
+
+  url = [
+      "http://query.yahooapis.com/v1/public/yql?",
+      "&q=select * from weather.forecast where woeid in (",
+      " select woeid from geo.places(1) where text=\"Riga\"",
+      " )",
+      "&format=json",
+      "&env=store://datatables.org/alltableswithkeys"
+  ].join("")
+
+  url = URI.escape(url)
+  uri = URI.parse(url)
+
+  response = Net::HTTP.get_response(uri)
+
+  json = JSON.parse(response.body)
+  channel = json['query']['results']['channel']
+  weather_data = channel['item']['condition']
+  weather_location = channel['location']
+  temp_fahrenheit = weather_data['temp']
+  temp_celsius = ((temp_fahrenheit.to_f - 32) * 5/9).to_i
+
+  send_event('weather', {
+      temp:      "#{temp_celsius}&deg;C",
+      condition: weather_data['text'],
+      title:     "#{weather_location['city']} Weather",
+      climacon:  climacon_class(climacon_class_to_code, weather_data['code'])
+  })
+
+end
