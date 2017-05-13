@@ -101,7 +101,7 @@ def get_tweet_text(tweet)
     else
       tweet.media.each { |media|
         expanded_uri = "#{media.expanded_uri}"
-        if (expanded_uri.size < 80)
+        if (expanded_uri.size < 50)
           final_text = final_text.sub(media.uri, expanded_uri)
         end
       }
@@ -110,7 +110,7 @@ def get_tweet_text(tweet)
   if tweet.uris?
     tweet.uris.each { |uri|
       expanded_uri = "#{uri.expanded_uri}"
-      if (expanded_uri.size < 80)
+      if (expanded_uri.size < 50)
         final_text = final_text.sub(uri.uri, expanded_uri)
       end
     }
@@ -179,7 +179,6 @@ SCHEDULER.every '1m', :first_in => 0 do |job|
     end
 
   rescue Twitter::Error => e
-    puts "\e[33mFor the twitter widget to work, you need to put in your twitter API keys in ./config/rigadevday.yml file.\e[0m"
     puts "\e[33mError message: #{e.message}\e[0m"
   end
 end
@@ -196,7 +195,7 @@ SCHEDULER.every '1h', :first_in => 0 do |job|
       if followers
         # Save all followers in the database for later query.
         followers.each do |follower|
-          if !Follower.exists?(id: follower.id)
+          unless Follower.exists?(id: follower.id)
             f             = Follower.new
             f.ID          = follower.id
             f.CREATED_AT  = follower.created_at.in_time_zone('Europe/Riga').iso8601
@@ -208,14 +207,10 @@ SCHEDULER.every '1h', :first_in => 0 do |job|
             f.save
           end
         end
-        # db.execute( "select * from followers;" ) do |row|
-        # TODO: Mark unfollowers as inactive + collect statistics
-        # end
       end
     end
 
   rescue Twitter::Error => e
-    puts "\e[33mFor the twitter widget to work, you need to put in your twitter API keys in ./config/rigadevday.yml file.\e[0m"
     puts "\e[33mError message: #{e.message}\e[0m"
   end
 end
@@ -264,8 +259,8 @@ SCHEDULER.every '1m', :first_in => 0 do |job|
     end
     exclude_users = global_config['twitter_exclude_heroes'] || []
     top_users = top_users.select { |user| !(exclude_users.include? user['name']) }
-    if !top_users.empty?
-      send_event('twitter_top_users', { users: top_users.take(6) })
+    unless top_users.empty?
+      send_event('twitter_top_users', {users: top_users.take(6)})
     end
 
   rescue Exception => e
