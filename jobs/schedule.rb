@@ -28,7 +28,9 @@ SCHEDULER.every '1m', :first_in => 0 do |job|
   current_slot  ||= time_slots.last
 
   if current_slot
+
     puts "Sending schedule for: #{current_slot['startTime']}"
+
     current_sessions   = current_slot['sessions'].each_with_index.map do |session, i|
       current_session  = sessions[session.first.to_s]
       avatar           = nil
@@ -71,7 +73,10 @@ SCHEDULER.every '1m', :first_in => 0 do |job|
          room: room_name
       }
     end
+
     send_event('schedule', sessions: current_sessions.select { |session| session[:title].downcase != 'tbd' })
+
   end
+
 end
 
