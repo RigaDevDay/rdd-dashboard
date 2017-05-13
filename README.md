@@ -1,6 +1,6 @@
-# RigaDevDay Event Dashboard
+# RigaDevDay(s) Event Dashboard
 
-This is an official dashboard for RigaDevDay 2015, 2016 and 2017. Implementation is based on Shopify's Dashing.
+This is an official dashboard for RigaDevDay(s) 2015, 2016 and 2017. Implementation is based on Shopify's Dashing.
 
 # 2017
 
