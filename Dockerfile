@@ -9,7 +9,7 @@ RUN mkdir -p /var/lib/sqlite
 RUN touch /var/lib/sqlite/rigadevday.db
 RUN touch /etc/rigadevday.yml
 
-ADD assets assets
+ADD . .
 
 RUN gem install dashing
 RUN bundle install
