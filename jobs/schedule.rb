@@ -1,14 +1,9 @@
 
-require 'json'
-require 'net/http'
 require 'active_support/time'
-require 'uri'
 require 'firebase'
-
 
 base_uri = 'https://rigadevdays2017.firebaseio.com/'
 firebase = Firebase::Client.new(base_uri)
-
 
 def to_min(time_str)
   time_code = time_str.split(':').join('').to_i
