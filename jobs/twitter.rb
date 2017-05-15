@@ -258,7 +258,7 @@ SCHEDULER.every '1m', :first_in => 0 do |job|
       }
     end
     exclude_users = global_config['twitter_exclude_heroes'] || [ 'PoopEmoji' ]
-    top_users = top_users.select { |user| !(exclude_users.include? user['name']) }
+    top_users = top_users.select { |user| !(user['name'].include? exclude_users) }
     unless top_users.empty?
       send_event('twitter_top_users', {users: top_users.take(6)})
     end
