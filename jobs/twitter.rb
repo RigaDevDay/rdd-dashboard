@@ -251,6 +251,7 @@ SCHEDULER.every '1m', :first_in => 0 do |job|
     top_users = []
     query_time = Time.now.in_time_zone('Europe/Riga').advance(:hours => -12).iso8601
     db.execute( "select count(*), name, avatar from tweets where datetime(created_at) > datetime(?) and content not like 'RT%' group by 2, 3 order by 1 desc, 2 asc;", [query_time] ) do |row|
+      puts row[1]
       top_users << {
         name: row[1],
         avatar: row[2],
@@ -258,6 +259,7 @@ SCHEDULER.every '1m', :first_in => 0 do |job|
       }
     end
     exclude_users = global_config['twitter_exclude_heroes'] || [ 'PoopEmoji' ]
+
     top_users = top_users.select { |user| !(user['name'].downcase.include? ['poop']) }
     unless top_users.empty?
       send_event('twitter_top_users', {users: top_users.take(6)})
