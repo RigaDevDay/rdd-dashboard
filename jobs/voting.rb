@@ -49,7 +49,7 @@ SCHEDULER.every '5m', :first_in => 0 do |job|
   votes = voting_data
               .map { |session_id, session_data| session_data }
               .select { |session_data| session_data[:rate] > 0 }
-              .select { |session_data| session_data[:totalVotes] > 0 }
+              .select { |session_data| session_data[:totalVotes] > 10 }
               .sort { |s1, s2| s2[:rate] <=> s1[:rate] }
               .take(6)
 
