@@ -166,7 +166,7 @@ SCHEDULER.every '1m', :first_in => 0 do |job|
 
     # Send most recent 18 tweets (excluding retweets) to dashboard.
     if tweets
-      tweets = tweets.select { |tweet| !tweet.text.start_with?('RT') && tweet.user.name.downcase.include?('poop') }.take(18).map do |tweet|
+      tweets = tweets.select { |tweet| !tweet.text.start_with?('RT') && !tweet.user.name.downcase.include?('poop') }.take(18).map do |tweet|
         {
           name:      tweet.user.name,
           avatar:    "#{tweet.user.profile_image_url_https}",
