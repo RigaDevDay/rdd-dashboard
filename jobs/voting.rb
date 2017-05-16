@@ -34,12 +34,18 @@ SCHEDULER.every '5m', :first_in => 0 do |job|
     session_feedback.each do |session_id, ratings|
       session_data = voting_data[session_id.to_s]
       if ratings.key?('qualityOfContent') && ['qualityOfContent']
-        session_data[:contentPoints] += ratings['qualityOfContent'].to_i
-        session_data[:contentVotes] += 1
+        r = ratings['qualityOfContent'].to_i
+        if r > 0
+          session_data[:contentPoints] += r
+          session_data[:contentVotes] += 1
+        end
       end
       if ratings.key?('speakerPerformance') && ratings['speakerPerformance']
-        session_data[:speakerPoints] += ratings['speakerPerformance'].to_i
-        session_data[:speakerVotes] += 1
+        r = ratings['speakerPerformance'].to_i
+        if r > 0
+          session_data[:speakerPoints] += r
+          session_data[:speakerVotes] += 1
+        end
       end
       session_data[:totalVotes] = session_data[:speakerVotes] + session_data[:contentVotes]
       session_data[:rate] = session_data[:totalVotes] > 0 ? (session_data[:speakerPoints] + session_data[:contentPoints]) / session_data[:totalVotes] : 0.0
@@ -49,7 +55,7 @@ SCHEDULER.every '5m', :first_in => 0 do |job|
   votes = voting_data
               .map { |session_id, session_data| session_data }
               .select { |session_data| session_data[:rate] > 0 }
-              .select { |session_data| session_data[:totalVotes] > 10 }
+              .select { |session_data| session_data[:totalVotes] > 30 }
               .sort { |s1, s2| s2[:rate] <=> s1[:rate] }
               .take(6)
 
