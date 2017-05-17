@@ -32,17 +32,17 @@ accounts = global_config['twitter_accounts'] || [ '@rigadevdays' ]
 db = SQLite3::Database.new db_path
 
 [
-  'CREATE TABLE IF NOT EXISTS TWEETS(ID TEXT, CONTENT TEXT, AVATAR TEXT, NAME TEXT, CREATED_AT TEXT);',
-  'CREATE UNIQUE INDEX IF NOT EXISTS TWEET_ID ON TWEETS (ID);',
-  'CREATE INDEX IF NOT EXISTS TWEET_DATE ON TWEETS (CREATED_AT);',
-  'CREATE INDEX IF NOT EXISTS TWEET_NAME ON TWEETS (NAME);',
-  'CREATE INDEX IF NOT EXISTS TWEET_CONTENT ON TWEETS (CONTENT);',
-  'CREATE TABLE IF NOT EXISTS MEDIA(ID TEXT, SHORT_URI TEXT, URI TEXT, WIDTH INTEGER, HEIGHT INTEGER, CREATED_AT TEXT);',
-  'CREATE UNIQUE INDEX IF NOT EXISTS MEDIA_ID ON MEDIA (ID);',
-  'CREATE INDEX IF NOT EXISTS MEDIA_DATE ON MEDIA (CREATED_AT);',
-  'CREATE TABLE IF NOT EXISTS FOLLOWERS(ID TEXT, TYPE TEXT, STATUS TEXT, AVATAR TEXT, NAME TEXT, CREATED_AT TEXT, FOLLOWED_AT TEXT);',
-  'CREATE UNIQUE INDEX IF NOT EXISTS FOLLOWER_ID ON FOLLOWERS (ID);',
-  'CREATE INDEX IF NOT EXISTS FOLLOWER_DATE ON FOLLOWERS (FOLLOWED_AT);',
+    'CREATE TABLE IF NOT EXISTS TWEETS(ID TEXT, CONTENT TEXT, AVATAR TEXT, NAME TEXT, CREATED_AT TEXT);',
+    'CREATE UNIQUE INDEX IF NOT EXISTS TWEET_ID ON TWEETS (ID);',
+    'CREATE INDEX IF NOT EXISTS TWEET_DATE ON TWEETS (CREATED_AT);',
+    'CREATE INDEX IF NOT EXISTS TWEET_NAME ON TWEETS (NAME);',
+    'CREATE INDEX IF NOT EXISTS TWEET_CONTENT ON TWEETS (CONTENT);',
+    'CREATE TABLE IF NOT EXISTS MEDIA(ID TEXT, SHORT_URI TEXT, URI TEXT, WIDTH INTEGER, HEIGHT INTEGER, CREATED_AT TEXT);',
+    'CREATE UNIQUE INDEX IF NOT EXISTS MEDIA_ID ON MEDIA (ID);',
+    'CREATE INDEX IF NOT EXISTS MEDIA_DATE ON MEDIA (CREATED_AT);',
+    'CREATE TABLE IF NOT EXISTS FOLLOWERS(ID TEXT, TYPE TEXT, STATUS TEXT, AVATAR TEXT, NAME TEXT, CREATED_AT TEXT, FOLLOWED_AT TEXT);',
+    'CREATE UNIQUE INDEX IF NOT EXISTS FOLLOWER_ID ON FOLLOWERS (ID);',
+    'CREATE INDEX IF NOT EXISTS FOLLOWER_DATE ON FOLLOWERS (FOLLOWED_AT);',
 ].each { |sql| db.execute(sql) }
 
 class Tweet < ActiveRecord::Base
@@ -55,18 +55,18 @@ class Follower < ActiveRecord::Base
 end
 
 Tweet.establish_connection(
-  :adapter => 'sqlite3',
-  :database => db_path
+    :adapter => 'sqlite3',
+    :database => db_path
 )
 
 Media.establish_connection(
-  :adapter => 'sqlite3',
-  :database => db_path
+    :adapter => 'sqlite3',
+    :database => db_path
 )
 
 Follower.establish_connection(
-  :adapter => 'sqlite3',
-  :database => db_path
+    :adapter => 'sqlite3',
+    :database => db_path
 )
 
 
@@ -166,13 +166,13 @@ SCHEDULER.every '1m', :first_in => 0 do |job|
 
     # Send most recent 18 tweets (excluding retweets) to dashboard.
     if tweets
-      tweets = tweets.select { |tweet| !tweet.text.start_with?('RT') && !tweet.user.name.downcase.include?('poop') }.take(18).map do |tweet|
+      tweets = tweets.select { |tweet| !tweet.text.start_with?('RT') && !tweet.user.name.downcase.include?('poop') && !get_tweet_text(tweet).include?('ow.ly/lPlX30bg') }.take(18).map do |tweet|
         {
-          name:      tweet.user.name,
-          avatar:    "#{tweet.user.profile_image_url_https}",
-          time:      tweet.created_at.in_time_zone('Europe/Riga').strftime("%m-%d %H:%M:%S"),
-          body:      get_tweet_text(tweet),
-          image:     tweet.media? ? tweet.media.first.media_uri : nil
+            name:      tweet.user.name,
+            avatar:    "#{tweet.user.profile_image_url_https}",
+            time:      tweet.created_at.in_time_zone('Europe/Riga').strftime("%m-%d %H:%M:%S"),
+            body:      get_tweet_text(tweet),
+            image:     tweet.media? ? tweet.media.first.media_uri : nil
         }
       end
       send_event('twitter_mentions', tweets: tweets.sort { |a, b| b[:time] <=> a[:time] })

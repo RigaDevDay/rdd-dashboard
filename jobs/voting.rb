@@ -12,22 +12,22 @@ SCHEDULER.every '5m', :first_in => 0 do |job|
   feedback      = firebase.get('userFeedbacks').body
 
   voting_data   = Hash[
-    sessions.select { |session_id, session_data| session_data.key?('speakers') }.collect do |session_id, session_data|
-      speaker     = speakers[session_data['speakers'].first]
-      [
-        session_id,
-        {
-            title: session_data['title'],
-            avatar: "https://rigadevdays.lv/#{speaker['photoUrl']}",
-            author: speaker['name'],
-            speakerPoints: 0.0,
-            speakerVotes: 0.0,
-            contentPoints: 0.0,
-            contentVotes: 0.0,
-            rate: 0.0
-        }
-      ]
-    end
+      sessions.select { |session_id, session_data| session_data.key?('speakers') }.collect do |session_id, session_data|
+        speaker     = speakers[session_data['speakers'].first]
+        [
+            session_id,
+            {
+                title: session_data['title'],
+                avatar: "https://rigadevdays.lv/#{speaker['photoUrl']}",
+                author: speaker['name'],
+                speakerPoints: 0.0,
+                speakerVotes: 0.0,
+                contentPoints: 0.0,
+                contentVotes: 0.0,
+                rate: 0.0
+            }
+        ]
+      end
   ]
 
   feedback.each do |user_id, session_feedback|
@@ -64,4 +64,3 @@ SCHEDULER.every '5m', :first_in => 0 do |job|
   send_event('voting', votes: votes)
 
 end
-
