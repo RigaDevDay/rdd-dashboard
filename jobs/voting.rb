@@ -1,5 +1,6 @@
 
 require 'firebase'
+require 'cgi'
 
 base_uri = 'https://riga-dev-days-2018.firebaseio.com/'
 firebase = Firebase::Client.new(base_uri)
@@ -14,11 +15,15 @@ SCHEDULER.every '5m', :first_in => 0 do |job|
   voting_data   = Hash[
       sessions.select { |session_id, session_data| session_data.key?('speakers') }.collect do |session_id, session_data|
         speaker     = speakers[session_data['speakers'].first]
+
+        urlClean     = CGI.escape(speaker['photoUrl'].gsub('/images', 'images'))
+        avatar       = "https://firebasestorage.googleapis.com/v0/b/riga-dev-days-2018.appspot.com/o/#{urlClean}?alt=media"
+
         [
             session_id,
             {
                 title: session_data['title'],
-                avatar: "https://rigadevdays.lv/#{speaker['photoUrl']}",
+                avatar: avatar,
                 author: speaker['name'],
                 speakerPoints: 0.0,
                 speakerVotes: 0.0,
