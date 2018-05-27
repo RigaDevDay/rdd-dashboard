@@ -1,6 +1,7 @@
 
 require 'active_support/time'
 require 'firebase'
+require 'cgi'
 
 base_uri = 'https://riga-dev-days-2018.firebaseio.com/'
 firebase = Firebase::Client.new(base_uri)
@@ -20,7 +21,12 @@ SCHEDULER.every '1m', :first_in => 0 do |job|
   sessions      = firebase.get('sessions').body
   speakers      = firebase.get('speakers').body
 
-  day_schedule  = full_schedule[(Date.today.day + 1) % 2]
+  date = 30
+  if Date.today.day > 30
+    date = 31
+  end
+
+  day_schedule  = full_schedule["2018-05-#{date}"]
   time_slots    = day_schedule['timeslots']
   rooms         = day_schedule['tracks']
 
@@ -32,15 +38,16 @@ SCHEDULER.every '1m', :first_in => 0 do |job|
     puts "Sending schedule for: #{current_slot['startTime']}"
 
     current_sessions   = current_slot['sessions'].each_with_index.map do |session, i|
-      current_session  = sessions[session.first.to_s]
+      current_session  = sessions[session['items'].first.to_s]
       avatar           = nil
       speaker_name     = nil
-      room_name        = current_session['auditorium'] ? current_session['auditorium'] : rooms[i]['title']
+      room_name        = current_session['room'] ? current_session['room'] : rooms[i]['title']
       if current_session['speakers']
         speaker        = speakers[current_session['speakers'].first]
         if speaker
           speaker_name = speaker['name']
-          avatar       = "https://rigadevdays.lv/#{speaker['photoUrl']}"
+          urlClean     = CGI.escape(speaker['photoUrl'].gsub('/images', 'images'))
+          avatar       = "https://firebasestorage.googleapis.com/v0/b/riga-dev-days-2018.appspot.com/o/#{urlClean}?alt=media"
         end
       end
       if room_name && (room_name.include? "SCAPE")
