@@ -1,7 +1,7 @@
 // ----------------------------------------------------------------------------
 // Sass declarations
 // ----------------------------------------------------------------------------
-$background-color:  #eb9c3c;
+$background-color:  #3f51b5;
 
 $title-color:       rgba(255, 255, 255, 0.7);
 $moreinfo-color:    rgba(255, 255, 255, 0.7);
@@ -15,12 +15,13 @@ $moreinfo-color:    rgba(255, 255, 255, 0.7);
 
   h3 {
    font-size: 60px;
-   color: white;
+   color: #3f51b5;
    font-weight: 900;
   }
 
   img {
     max-width: 585px;
+    max-height: 80px;
   }
 
 }
