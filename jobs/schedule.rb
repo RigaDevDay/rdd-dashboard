@@ -2,7 +2,7 @@
 require 'active_support/time'
 require 'firebase'
 
-base_uri = 'https://rigadevdays2017.firebaseio.com/'
+base_uri = 'https://riga-dev-days-2018.firebaseio.com/'
 firebase = Firebase::Client.new(base_uri)
 
 def to_min(time_str)
