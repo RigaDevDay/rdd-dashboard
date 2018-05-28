@@ -6,7 +6,7 @@ base_uri = 'https://riga-dev-days-2018.firebaseio.com/'
 firebase = Firebase::Client.new(base_uri)
 
 
-SCHEDULER.every '5m', :first_in => 0 do |job|
+SCHEDULER.every '2m', :first_in => 0 do |job|
 
   sessions      = firebase.get('sessions').body
   speakers      = firebase.get('speakers').body
